@@ -37,7 +37,7 @@ uri[3].freeze
 
 #----------------------------------
 # setting always false
-@isNetworkWorking = false
+isNetworkWorking = false
 #----------------------------------
 
 
@@ -45,12 +45,26 @@ uri[3].freeze
 #Acquire the web-pages , on error set no internet
 begin 
 bing  = Net::HTTP.get_response(uri[1])
+rescue
+  #
+ensure
+  isNetworkWorking = false
+end 
+
+begin 
 yahoo = Net::HTTP.get_response(uri[2])
+rescue
+  #
+ensure
+  isNetworkWorking = false
+end 
+
+begin 
 steam = Net::HTTP.get_response(uri[3])
 rescue
   #
 ensure
-  @isNetworkWorking = false
+  isNetworkWorking = false
 end 
 #----------------------------------
 
@@ -91,8 +105,8 @@ end
 
 #----------------------------------
 #Check internet using the acquired data 
-@isNetworkWorking = false
-@isNetworkWorking = responseCode[1] || responseCode[2] || responseCode[3] 
+isNetworkWorking = false
+isNetworkWorking = responseCode[1] || responseCode[2] || responseCode[3] 
 #----------------------------------
 
 
@@ -106,12 +120,10 @@ yahoo = nil
 responseCode = []
 #----------------------------------
 
-
-#----------------------------------
-# Use this variable
-#@isNetworkWorking
-#----------------------------------
-
+ap responseCode[1]
+ap responseCode[2]
+ap responseCode[3]
+ap isNetworkWorking
 
 #puts "reaching the expected requirement"
 #puts " reaching "
